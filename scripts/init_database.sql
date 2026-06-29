@@ -24,26 +24,33 @@ Proceed with caution and ensure you have a backup before
 executing this script.
 */
 
-USE MASTER;
--- Drop and Recrate 'DataWarehouse' Database
-IF EXISTS (SELECT 1 FROM sys.databases WHERE name = 'DataWarehouse')
+
+--Create DataWarehouse Database, Drop DatWarehouse database and recreate it.
+USE master;
+
+
+IF EXISTS(SELECT 1 FROM sys.databases WHERE name = 'DataWarehouse')
 BEGIN
-	ALTER DATABASE DataWarehouse SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+
+	ALTER DATABASE DataWarehouse
+	SET SINGLE_USER
+	WITH ROLLBACK IMMEDIATE;
+
 	DROP DATABASE DataWarehouse;
 END
 
--- Create 'DataWarehouse' Database
 CREATE DATABASE DataWarehouse;
 
 
-
+-- Create schemas.
+GO
 USE DataWarehouse;
 
 GO
-
--- Create Schemas
 CREATE SCHEMA bronze;
+
 GO
 CREATE SCHEMA silver;
+
 GO
 CREATE SCHEMA gold;
